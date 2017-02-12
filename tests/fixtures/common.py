@@ -6,13 +6,15 @@ import pytest
 from core.cnki import CNKI
 from core.journal import Journal
 
-journal_names = ['管理世界']
+journals = {
+    '管理世界': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=GLSJ',
+}
 
-@pytest.fixture( params = journal_names )
+@pytest.fixture( params = journals )
 def journal_name(request):
     return request.param
 
-@pytest.fixture( params = journal_names )
+@pytest.fixture( params = journals )
 def journal(request):
     return Journal(request.param)
 
