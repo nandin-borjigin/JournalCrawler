@@ -3,7 +3,7 @@ import random
 
 class CNKI(object):
     def __init__(self):
-        self.search_url = 'http://navi.cnki.net/KNavi/Common/SearchAll'
+        self.search_url = 'http://navi.cnki.net/KNavi/Common/Search/All'
         self.search_method = 'POST'
         self.search_headers = {
             'Content-Type': 'application/x-www-form-urlencoded'

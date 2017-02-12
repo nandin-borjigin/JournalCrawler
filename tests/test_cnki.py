@@ -7,7 +7,7 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 from fixtures.common import *
 
 def test_search_url(cnki):
-    assert cnki.search_url == 'http://navi.cnki.net/KNavi/Common/SearchAll'
+    assert cnki.search_url == 'http://navi.cnki.net/KNavi/Common/Search/All'
 
 def test_search_method(cnki):
     assert cnki.search_method == 'POST'
