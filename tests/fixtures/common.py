@@ -59,13 +59,22 @@ def cnkiparser():
     return CNKIParser()
 
 def fake_search_response(journal_name):
+    return __file_as_response('search-response-' + journal_name + '.html', { 'journal': Journal(journal_name) })
+
+def fake_exist_response(existence = True):
+    url = 'http://www.example.com'
+    req = Request(url)
+    return TextResponse(url, request = req, body = str(existence)) 
+
+def __file_as_response(filename, meta = {}):
     from os import path
-    filepath = 'fake_files/search-response-' + journal_name + '.html'
+    filepath = 'fake_files/' + filename
     current_dir = path.dirname( path.abspath( __file__ ) )
     fullpath = path.join(current_dir, filepath)
     with open(fullpath, 'r') as f:
         content = f.read()
 
     url = 'http://www.example.com'
-    req = Request(url, meta = { 'journal': Journal(journal_name) })
-    return TextResponse(url, request = req, body =  content)
+    req =  Request(url, meta = meta)
+    return TextResponse(url, request = req, body = content)
+

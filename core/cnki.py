@@ -35,4 +35,7 @@ class CNKIParser(object):
             return 'http://navi.cnki.net' + link
         else: 
             return ''
-   
+
+    def parse_article_existence(self, response):
+       return response.body == 'True'
+
