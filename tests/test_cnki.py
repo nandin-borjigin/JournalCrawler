@@ -4,13 +4,7 @@ import sys
 from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 
-from core.cnki import CNKI
-from core.journal import Journal
 from fixtures.common import *
-
-@pytest.fixture
-def cnki():
-    return CNKI()
 
 def test_search_url(cnki):
     assert cnki.search_url == 'http://navi.cnki.net/KNavi/Common/SearchAll'
@@ -22,10 +16,6 @@ def test_search_headers(cnki):
     assert cnki.search_headers == {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-
-@pytest.fixture( params = journal_names )
-def journal(request):
-    return Journal(request.param)
 
 def test_search_body(cnki, journal, page):
     prefix = '{"StateID":"","Platfrom":"","QueryTime":"","Account":"knavi","ClientToken":"","Language":"","CNode":{"PCode":"SCDB","SMode":"","OperateT":""},"QNode":{"SelectT":"","Select_Fields":"","S_DBCodes":"","QGroup":[{"Key":"subject","Logic":1,"Items":[],"ChildItems":[{"Key":"txt","Logic":1,"Items":[{"Key":"txt_1","Title":"","Logic":1,"Name":"LY","Operate":"%","Value":"'
