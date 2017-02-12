@@ -39,3 +39,7 @@ class CNKIParser(object):
     def parse_article_existence(self, response):
        return response.body == 'True'
 
+    def parse_article_list(self, response):
+        base = 'http://navi.cnki.net/KNavi/'
+        return [base + l.encode('utf-8') for l in response.xpath('//dd/span[@class="name"]/a/@href').extract()]
+

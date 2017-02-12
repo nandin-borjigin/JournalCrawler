@@ -66,6 +66,31 @@ def fake_exist_response(existence = True):
     req = Request(url)
     return TextResponse(url, request = req, body = str(existence)) 
 
+def fake_article_list_response():
+    answer = [
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602001&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602002&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602003&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602004&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602005&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602006&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602007&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602008&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602009&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602010&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602011&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602012&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602013&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602014&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602015&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602016&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602017&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602019&tableName=CJFDLAST2016',
+        'http://navi.cnki.net/KNavi/Common/RedirectPage?sfield=FN&dbCode=CJFD&filename=LKGP201602018&tableName=CJFDLAST2016'
+    ]
+
+    return (__file_as_response('article-list.html'), answer)
+
 def __file_as_response(filename, meta = {}):
     from os import path
     filepath = 'fake_files/' + filename
