@@ -19,7 +19,11 @@ class CNKI(object):
             'pagecount': 10,
             'random': random.random()
         }
+    def article_existence_url(self, journal, year, issue):
+        return 'http://navi.cnki.net/KNavi/JournalDetail/GetIfFileExist?year=' + year + '&issue=' + issue + '&pykm=' + journal.pykm
 
+    def article_list_url(self, journal, year, issue):
+        return 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?' + year + '&issue=' + issue + '&pykm=' + journal.pykm + '&pageIdx=0'
     
 class CNKIParser(object):
     def parse_search_response(self, response):

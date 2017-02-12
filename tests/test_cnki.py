@@ -33,3 +33,12 @@ def test_search_body(cnki, journal, page):
         'pagecount': 10
     }
 
+def test_article_url(cnki, journal_object, year, issue):
+    name, obj = journal_object
+    journal = Journal(name)
+    journal.pykm = obj['pykm']
+    existence_url = cnki.article_existence_url(journal, year, issue)
+    assert existence_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetIfFileExist?year=' + year + '&issue=' + issue + '&pykm=' + obj['pykm']
+    list_url = cnki.article_list_url(journal, year, issue)
+    assert list_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?' + year + '&issue=' + issue + '&pykm=' + obj['pykm'] + '&pageIdx=0'
+

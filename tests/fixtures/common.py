@@ -30,11 +30,25 @@ def journal(request):
 def journal_with_url(request):
     return (request.param, journals[request.param]['url'])
 
+@pytest.fixture( params = journals )
+def journal_object(request):
+    return (request.param, journals[request.param])
+
 pages = [1, 3]
 
 @pytest.fixture( params = pages )
 def page(request):
     return request.param
+
+years = [2015]
+@pytest.fixture( params = years )
+def year(request):
+    return str(request.param)
+
+issues = [1, 12]
+@pytest.fixture( params = issues )
+def issue(request):
+    return '%2d' % request.param
 
 @pytest.fixture
 def cnki():
