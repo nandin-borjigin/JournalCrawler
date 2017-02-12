@@ -21,3 +21,14 @@ class CNKI(object):
         }
 
     
+class CNKIParser(object):
+    def parse_search_response(self, response):
+        journal = response.meta['journal']
+        results = [r.encode('utf-8') for r in response.css('dd div h1 a::text').extract()]
+        if journal.name in results:
+            index = results.index(journal.name)
+            link = response.css('dd div h1 a::attr(href)').extract()[index].strip()
+            return 'http://navi.cnki.net' + link
+        else: 
+            return ''
+   
