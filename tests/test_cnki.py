@@ -40,5 +40,5 @@ def test_article_url(cnki, journal_object, year, issue):
     existence_url = cnki.article_existence_url(journal, year, issue)
     assert existence_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetIfFileExist?year=' + year + '&issue=' + issue + '&pykm=' + obj['pykm']
     list_url = cnki.article_list_url(journal, year, issue)
-    assert list_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?' + year + '&issue=' + issue + '&pykm=' + obj['pykm'] + '&pageIdx=0'
+    assert list_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?year=' + year + '&issue=' + issue + '&pykm=' + obj['pykm'] + '&pageIdx=0'
 
