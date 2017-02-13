@@ -43,3 +43,22 @@ class CNKIParser(object):
         base = 'http://navi.cnki.net/KNavi/'
         return [base + l.encode('utf-8') for l in response.xpath('//dd/span[@class="name"]/a/@href').extract()]
 
+    def parse_article(self, response):
+        article = response.meta['article']
+        aoi = response.css('div.author.summaryRight')
+        title = response.css('span#chTitle::text').extract_first().encode('utf-8')
+        authors = aoi.xpath('//p[contains(text(), "%s")]/a/text()' % u'【作者】').extract()
+        authors = [a.encode('utf-8') for a in authors]
+        organization = aoi.xpath('//p[contains(text(), "%s")]/a/text()' % u'【机构】').extract()
+        organization = [org.encode('utf-8') for org in organization]
+        abstract = aoi.css('span#ChDivSummary::text').extract_first().encode('utf-8')
+        keywords = [kw.encode('utf-8') for kw in response.css('span#ChDivKeyWord a::text').extract()]
+        article.update({ 
+            'title': title,
+            'author': authors,
+            'abstract': abstract,
+            'keywords': keywords,
+            'organization': organization,
+        })
+        return article
+
