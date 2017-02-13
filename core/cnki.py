@@ -51,7 +51,9 @@ class CNKIParser(object):
         authors = [a.encode('utf-8') for a in authors]
         organization = aoi.xpath('//p[contains(text(), "%s")]/a/text()' % u'【机构】').extract()
         organization = [org.encode('utf-8') for org in organization]
-        abstract = aoi.css('span#ChDivSummary::text').extract_first().encode('utf-8')
+        abstract = aoi.css('span#ChDivSummary::text').extract_first()
+        if abstract is not None: abstract = abstract.encode('utf-8')
+        else: abstract = ''
         keywords = [kw.encode('utf-8') for kw in response.css('span#ChDivKeyWord a::text').extract()]
         article.update({ 
             'title': title,
