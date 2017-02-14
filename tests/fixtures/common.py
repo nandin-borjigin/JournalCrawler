@@ -106,8 +106,9 @@ def cnki():
 def cnkiparser():
     return CNKIParser()
 
-def fake_search_response(journal_name):
-    return __file_as_response('search-response-' + journal_name + '.html', { 'journal': Journal(journal_name) })
+def fake_search_response(journal):
+    filename = 'search-response-%s.html' % journal['name']
+    return (__file_as_response(filename, { 'journal': Journal(journal['name']) }), journal['url'])
 
 def fake_exist_response(existence = True):
     url = 'http://www.example.com'
