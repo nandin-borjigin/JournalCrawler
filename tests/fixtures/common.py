@@ -8,12 +8,12 @@ from core.cnki import CNKI, CNKIParser
 from core.journal import Journal
 
 journals = {
-    '管理世界': { 
+    'guan li shi jie': { 
         'name': '管理世界',
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=GLSJ',
         'pykm': 'GLSJ'
     },
-    '南开管理评论': {
+    'nan kai guan li ping lun': {
         'name': '南开管理评论',
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=LKGP',
         'pykm': 'LKGP'
@@ -21,7 +21,7 @@ journals = {
 }
 
 articles = {
-    '无绩效考核下外部独立董事薪酬的决定': {
+    'normal-article': {
         'title': '无绩效考核下外部独立董事薪酬的决定',
         'year': '2016',
         'issue': '02',
@@ -30,7 +30,7 @@ articles = {
         'abstract': '本文主要研究在没有绩效考虑的情况下,上市公司外部独立董事的薪酬是如何决定的。本文对2005-2014年我国A股上市公司12821个样本的实证检验结果表明,无论是在一定地理范围内、同行业里或一定规模上,上市公司在外部独立董事薪酬决定时均存在显著的"互相看齐"效应,即出现向地理上的中间距离、同一或相关行业或中等规模公司看齐的现象。这既与我们在现实生活中外部独立董事薪酬所观察到的实际现象相吻合,也符合中国传统哲学在利益分配上的中庸思想。',
         'keywords': ['外部独立董事', '公司治理', '薪酬']
     },
-    '2016年总目录': {
+    'article without author, abstract, etc.': {
         'title': '2016年总目录',
         'year': '2016',
         'issue': '12',
