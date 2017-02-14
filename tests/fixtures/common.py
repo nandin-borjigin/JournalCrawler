@@ -38,23 +38,11 @@ articles = {
 }
 
 @pytest.fixture( params = journals )
-def journal_name(request):
-    return request.param
-
-@pytest.fixture( params = journals )
-def journal(request):
-    return Journal(request.param)
-
-@pytest.fixture( params = journals )
-def journal_with_url(request):
-    return (request.param, journals[request.param]['url'])
-
-@pytest.fixture( params = journals )
-def journal_object(request):
+def journal_data(request):
     return (request.param, journals[request.param])
 
 @pytest.fixture( params = articles )
-def article(request):
+def article_data(request):
     return (request.param, articles[request.param])
 
 pages = [1, 3]

@@ -17,9 +17,11 @@ def test_search_headers(cnki):
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-def test_search_body(cnki, journal, page):
+def test_search_body(cnki, journal_data, page):
     prefix = '{"StateID":"","Platfrom":"","QueryTime":"","Account":"knavi","ClientToken":"","Language":"","CNode":{"PCode":"SCDB","SMode":"","OperateT":""},"QNode":{"SelectT":"","Select_Fields":"","S_DBCodes":"","QGroup":[{"Key":"subject","Logic":1,"Items":[],"ChildItems":[{"Key":"txt","Logic":1,"Items":[{"Key":"txt_1","Title":"","Logic":1,"Name":"LY","Operate":"%","Value":"'
     postfix = '","ExtendType":0,"ExtendValue":"","Value2":""}],"ChildItems":[]}]}],"OrderBy":"","GroupBy":"","Additon":""}}'
+    name, _ = journal_data
+    journal = Journal(name)
     search_state_json =  prefix + journal.name + postfix
     def body():
         return    
@@ -33,8 +35,8 @@ def test_search_body(cnki, journal, page):
         'pagecount': 10
     }
 
-def test_article_url(cnki, journal_object, year, issue):
-    name, obj = journal_object
+def test_article_url(cnki, journal_data, year, issue):
+    name, obj = journal_data
     journal = Journal(name)
     journal.pykm = obj['pykm']
     existence_url = cnki.article_existence_url(journal, year, issue)
