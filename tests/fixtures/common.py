@@ -9,10 +9,12 @@ from core.journal import Journal
 
 journals = {
     '管理世界': { 
+        'name': '管理世界',
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=GLSJ',
         'pykm': 'GLSJ'
     },
     '南开管理评论': {
+        'name': '南开管理评论',
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=LKGP',
         'pykm': 'LKGP'
     }
@@ -39,7 +41,7 @@ articles = {
 
 @pytest.fixture( params = journals )
 def journal_data(request):
-    return (request.param, journals[request.param])
+    return journals[request.param]
 
 @pytest.fixture( params = articles )
 def article_data(request):

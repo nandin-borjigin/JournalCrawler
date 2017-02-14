@@ -9,9 +9,8 @@ from fixtures.common import cnkiparser, journal_data, article_data
 from fixtures.common import fake_search_response, fake_exist_response, fake_article_list_response, fake_article_response
 
 def test_parse_search_response(cnkiparser, journal_data):
-    name, data = journal_data
-    response = fake_search_response(name)
-    assert cnkiparser.parse_search_response(response) == data['url']
+    response = fake_search_response(journal_data['name'])
+    assert cnkiparser.parse_search_response(response) == journal_data['url']
 
 def test_parse_article_existence(cnkiparser):
     response = fake_exist_response(True)
