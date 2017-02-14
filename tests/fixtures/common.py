@@ -106,28 +106,31 @@ def cnki():
 def cnkiparser():
     return CNKIParser()
 
-def fake_search_response(journal):
-    filename = 'search-response-%s.html' % journal['name']
-    return (__file_as_response(filename, { 'journal': Journal(journal['name']) }), journal['url'])
+@pytest.fixture
+def fake_search_response(journal_data):
+    filename = 'search-response-%s.html' % journal_data['name']
+    return (__file_as_response(filename, { 'journal': Journal(journal_data['name']) }), journal_data['url'])
 
 def fake_exist_response(existence = True):
     url = 'http://www.example.com'
     req = Request(url)
     return TextResponse(url, request = req, body = str(existence)) 
 
+@pytest.fixture
 def fake_article_list_response(article_list):
     filename = '%s-%s-%s.html' % (article_list['journal'], article_list['year'], article_list['issue'])
     return (__file_as_response(filename), article_list['list'])
 
-def fake_article_response(article):
+@pytest.fixture
+def fake_article_response(article_data):
     meta = {
         'article': {
-            'year': article['year'],
-            'issue': article['issue']
+            'year': article_data['year'],
+            'issue': article_data['issue']
         }
     }
-    filename = 'article-' + article['title'] + '.html'
-    return (__file_as_response(filename, meta), article)
+    filename = 'article-' + article_data['title'] + '.html'
+    return (__file_as_response(filename, meta), article_data)
 
 def __file_as_response(filename, meta = {}):
     from os import path

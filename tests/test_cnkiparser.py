@@ -8,8 +8,8 @@ from core.journal import Journal
 from fixtures.common import cnkiparser, journal_data, article_data, article_list
 from fixtures.common import fake_search_response, fake_exist_response, fake_article_list_response, fake_article_response
 
-def test_parse_search_response(cnkiparser, journal_data):
-    response, answer = fake_search_response(journal_data)
+def test_parse_search_response(cnkiparser, fake_search_response):
+    response, answer = fake_search_response
     assert cnkiparser.parse_search_response(response) == answer
 
 def test_parse_article_existence(cnkiparser):
@@ -18,10 +18,10 @@ def test_parse_article_existence(cnkiparser):
     response = fake_exist_response(False)
     assert not cnkiparser.parse_article_existence(response)
 
-def test_parse_article_list(cnkiparser, article_list):
-    response, answer = fake_article_list_response(article_list)
+def test_parse_article_list(cnkiparser, fake_article_list_response):
+    response, answer = fake_article_list_response
     assert cnkiparser.parse_article_list(response) == answer
 
-def test_parse_article(cnkiparser, article_data):
-    response, answer = fake_article_response(article_data)
+def test_parse_article(cnkiparser, fake_article_response):
+    response, answer = fake_article_response
     assert cnkiparser.parse_article(response) == answer
