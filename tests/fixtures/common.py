@@ -22,6 +22,7 @@ journals = {
 
 articles = {
     '无绩效考核下外部独立董事薪酬的决定': {
+        'title': '无绩效考核下外部独立董事薪酬的决定',
         'year': '2016',
         'issue': '02',
         'author': ['沈艺峰', '陈旋'],
@@ -30,6 +31,7 @@ articles = {
         'keywords': ['外部独立董事', '公司治理', '薪酬']
     },
     '2016年总目录': {
+        'title': '2016年总目录',
         'year': '2016',
         'issue': '12',
         'author': [],
@@ -45,7 +47,7 @@ def journal_data(request):
 
 @pytest.fixture( params = articles )
 def article_data(request):
-    return (request.param, articles[request.param])
+    return articles[request.param]
 
 pages = [1, 3]
 
@@ -105,16 +107,14 @@ def fake_article_list_response():
     return (__file_as_response('article-list.html'), answer)
 
 def fake_article_response(article):
-    title, detail = article
-    detail['title'] = title
     meta = {
         'article': {
-            'year': detail['year'],
-            'issue': detail['issue']
+            'year': article['year'],
+            'issue': article['issue']
         }
     }
-    filename = 'article-' + title + '.html'
-    return (__file_as_response(filename, meta), detail)
+    filename = 'article-' + article['title'] + '.html'
+    return (__file_as_response(filename, meta), article)
 
 def __file_as_response(filename, meta = {}):
     from os import path
