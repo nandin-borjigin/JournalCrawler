@@ -5,7 +5,7 @@ from os import path
 sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
 
 from core.journal import Journal
-from fixtures.common import cnkiparser, journal_data, article_data
+from fixtures.common import cnkiparser, journal_data, article_data, article_list
 from fixtures.common import fake_search_response, fake_exist_response, fake_article_list_response, fake_article_response
 
 def test_parse_search_response(cnkiparser, journal_data):
@@ -18,8 +18,8 @@ def test_parse_article_existence(cnkiparser):
     response = fake_exist_response(False)
     assert not cnkiparser.parse_article_existence(response)
 
-def test_parse_article_list(cnkiparser):
-    response, answer = fake_article_list_response()
+def test_parse_article_list(cnkiparser, article_list):
+    response, answer = fake_article_list_response(article_list)
     assert cnkiparser.parse_article_list(response) == answer
 
 def test_parse_article(cnkiparser, article_data):
