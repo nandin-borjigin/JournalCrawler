@@ -9,25 +9,42 @@ from core.journal import Journal
 class CnkiSpider(scrapy.Spider):
     name = "cnki"
     allowed_domains = ["navi.cnki.net"]
-    journal_names = ['管理世界', '南开管理评论', '中国工业经济', '中国软科学', '科研管理', '管理科学学报', '经济管理']
+    # journal_names = ['管理世界', '南开管理评论', '中国工业经济', '中国软科学', '科研管理', '管理科学学报', '经济管理']
+    journal_names = ['经济管理']
     years = [str(year) for year in range(2013, 2017)]
     issues = ["%02d" % issue for issue in range(1, 13)]
     cnki = CNKI()
     cnkiparser = CNKIParser()
-    def start_requests(self):
+
+    def __search_request(self, journal, page):
         url = self.cnki.search_url
         method = self.cnki.search_method
         headers = self.cnki.search_headers
+        body = self.cnki.search_body(journal, page)
+        body = urlencode(body)
+        meta = { 'journal': journal }
+        return scrapy.Request(url, 
+                              method = method,
+                              headers = headers,
+                              body = body,
+                              meta = meta,
+                              callback = self.parse_search)
+
+    def start_requests(self):
         for name in self.journal_names:
             journal = Journal(name)
-            body = self.cnki.search_body(journal, 1)
-            body = urlencode(body)
-            meta = { 'journal': journal }
-            yield scrapy.Request(url, method = method, headers = headers, body = body, meta = meta)
+            yield self.__search_request(journal, 1)
 
     def parse(self, response):
-        journal_page_url = self.cnkiparser.parse_search_response(response)
-        if journal_page_url == '': return
+        parse_search(response)
+
+    def parse_search(self, response):
+        found, result = self.cnkiparser.parse_search_response(response)
+        if not found:
+            if result != '': yield self.__search_request(response.meta['journal'], int(result))
+            return
+
+        journal_page_url = result
         import urlparse
         query = list(urlparse.urlparse(journal_page_url))[4]
         pykm = dict(urlparse.parse_qsl(query))['baseid']
