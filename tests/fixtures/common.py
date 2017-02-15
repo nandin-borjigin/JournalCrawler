@@ -74,14 +74,6 @@ article_lists = {
 def journal_data(request):
     return journals[request.param]
 
-@pytest.fixture( params = articles )
-def article_data(request):
-    return articles[request.param]
-
-@pytest.fixture( params = article_lists )
-def article_list(request):
-    return article_lists[request.param]
-
 pages = [1, 3]
 
 @pytest.fixture( params = pages )
@@ -106,31 +98,36 @@ def cnki():
 def cnkiparser():
     return CNKIParser()
 
-@pytest.fixture
-def fake_search_response(journal_data):
-    filename = 'search-response-%s.html' % journal_data['name']
-    return (__file_as_response(filename, { 'journal': Journal(journal_data['name']) }), journal_data['url'])
+@pytest.fixture( params = journals )
+def search_response(request):
+    journal = journals[request.param]
+    filename = 'search-response-%s.html' % journal['name']
+    return (__file_as_response(filename, { 'journal': Journal(journal['name']) }), journal['url'])
 
-def fake_exist_response(existence = True):
+existences = [True, False]
+@pytest.fixture( params = existences )
+def exist_response(request):
     url = 'http://www.example.com'
     req = Request(url)
-    return TextResponse(url, request = req, body = str(existence)) 
+    return (TextResponse(url, request = req, body = str(request.param)), request.param)
 
-@pytest.fixture
-def fake_article_list_response(article_list):
+@pytest.fixture( params = article_lists )
+def article_list_response(request):
+    article_list = article_lists[request.param]
     filename = '%s-%s-%s.html' % (article_list['journal'], article_list['year'], article_list['issue'])
     return (__file_as_response(filename), article_list['list'])
 
-@pytest.fixture
-def fake_article_response(article_data):
+@pytest.fixture( params = articles )
+def article_response(request):
+    article = articles[request.param]
     meta = {
         'article': {
-            'year': article_data['year'],
-            'issue': article_data['issue']
+            'year': article['year'],
+            'issue': article['issue']
         }
     }
-    filename = 'article-' + article_data['title'] + '.html'
-    return (__file_as_response(filename, meta), article_data)
+    filename = 'article-' + article['title'] + '.html'
+    return (__file_as_response(filename, meta), article)
 
 def __file_as_response(filename, meta = {}):
     from os import path
