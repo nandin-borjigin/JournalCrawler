@@ -17,9 +17,10 @@ def test_search_headers(cnki):
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-def test_search_body(cnki, journal, page):
+def test_search_body(cnki, journal_data, page):
     prefix = '{"StateID":"","Platfrom":"","QueryTime":"","Account":"knavi","ClientToken":"","Language":"","CNode":{"PCode":"SCDB","SMode":"","OperateT":""},"QNode":{"SelectT":"","Select_Fields":"","S_DBCodes":"","QGroup":[{"Key":"subject","Logic":1,"Items":[],"ChildItems":[{"Key":"txt","Logic":1,"Items":[{"Key":"txt_1","Title":"","Logic":1,"Name":"LY","Operate":"%","Value":"'
     postfix = '","ExtendType":0,"ExtendValue":"","Value2":""}],"ChildItems":[]}]}],"OrderBy":"","GroupBy":"","Additon":""}}'
+    journal = Journal(journal_data['name'])
     search_state_json =  prefix + journal.name + postfix
     def body():
         return    
@@ -33,12 +34,11 @@ def test_search_body(cnki, journal, page):
         'pagecount': 10
     }
 
-def test_article_url(cnki, journal_object, year, issue):
-    name, obj = journal_object
-    journal = Journal(name)
-    journal.pykm = obj['pykm']
+def test_article_url(cnki, journal_data, year, issue):
+    journal = Journal(journal_data['name'])
+    journal.pykm = journal_data['pykm']
     existence_url = cnki.article_existence_url(journal, year, issue)
-    assert existence_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetIfFileExist?year=' + year + '&issue=' + issue + '&pykm=' + obj['pykm']
+    assert existence_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetIfFileExist?year=' + year + '&issue=' + issue + '&pykm=' + journal_data['pykm']
     list_url = cnki.article_list_url(journal, year, issue)
-    assert list_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?year=' + year + '&issue=' + issue + '&pykm=' + obj['pykm'] + '&pageIdx=0'
+    assert list_url == 'http://navi.cnki.net/KNavi/JournalDetail/GetArticleList?year=' + year + '&issue=' + issue + '&pykm=' + journal_data['pykm'] + '&pageIdx=0'
 

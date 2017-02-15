@@ -32,9 +32,19 @@ class CNKIParser(object):
         if journal.name in results:
             index = results.index(journal.name)
             link = response.css('dd div h1 a::attr(href)').extract()[index].strip()
-            return 'http://navi.cnki.net' + link
+            return (True, 'http://navi.cnki.net' + link)
         else: 
-            return ''
+            page = response.css('em#txtPageGoToBottom::text').extract_first()
+            page_total = response.css('em#lblPageCount::text').extract_first()
+            if page is not None and page_total is not None: 
+                page = page.encode('utf-8')
+                page_num = int(page)
+                total_num = int(page_total.encode('utf-8'))
+                if page_num >= total_num: page = ''
+                else: page = str(page_num + 1)
+            else:
+                page = ''
+            return (False, page)
 
     def parse_article_existence(self, response):
        return response.body == 'True'
