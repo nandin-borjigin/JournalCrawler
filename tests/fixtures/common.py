@@ -19,6 +19,12 @@ journals = {
         'on first page': True,
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=LKGP',
         'pykm': 'LKGP'
+    },
+    'jing ji guan li': {
+        'name': '经济管理',
+        'on first page': False,
+        'url': '2',
+        'pykm': 'JJGU'
     }
 }
 
