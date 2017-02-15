@@ -32,9 +32,9 @@ class CNKIParser(object):
         if journal.name in results:
             index = results.index(journal.name)
             link = response.css('dd div h1 a::attr(href)').extract()[index].strip()
-            return 'http://navi.cnki.net' + link
+            return (True, 'http://navi.cnki.net' + link)
         else: 
-            return ''
+            return (False, '')
 
     def parse_article_existence(self, response):
        return response.body == 'True'

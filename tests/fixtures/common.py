@@ -10,11 +10,13 @@ from core.journal import Journal
 journals = {
     'guan li shi jie': { 
         'name': '管理世界',
+        'on first page': True,
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=GLSJ',
         'pykm': 'GLSJ'
     },
     'nan kai guan li ping lun': {
         'name': '南开管理评论',
+        'on first page': True,
         'url': 'http://navi.cnki.net/KNavi/pubDetail?pubtype=journal&pcode=CJFD&baseid=LKGP',
         'pykm': 'LKGP'
     }
@@ -102,7 +104,8 @@ def cnkiparser():
 def search_response(request):
     journal = journals[request.param]
     filename = 'search-response-%s.html' % journal['name']
-    return (__file_as_response(filename, { 'journal': Journal(journal['name']) }), journal['url'])
+    answer = (journal['on first page'], journal['url'])
+    return (__file_as_response(filename, { 'journal': Journal(journal['name']) }), answer)
 
 existences = [True, False]
 @pytest.fixture( params = existences )
